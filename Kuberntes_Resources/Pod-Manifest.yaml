@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:  #Dictionary
+  name: myapp-pod
+  labels:
+    app: myapp   # Key-Value Pairs
+spec:
+  containers:  #list
+  - name: myapp
+    image: stacksimplify/kubenginx:1.0.0
+    # resources:
+    #   limits:
+    #     memory: "128Mi"
+    #     cpu: "500m"
+    ports:
+      - containerPort: 80

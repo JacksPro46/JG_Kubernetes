@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: usrmngnt-webapp
+  labels:
+    app: usrmgnt-webapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: usrmgnt-webapp
+  template:
+    metadata:
+      labels:
+        app: usrmgnt-webapp
+    spec:
+      init-containers:
+        - name: init-db
+          image: busybox:1.31
+          command: ['sh']
+      containers:
+      - name: usrmgnt-webapp
+        image: stacksimplify/kube-usermgmt-webapp:1.0.0-MySQLDB
+        imagePullPolicy: Always
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
+        env: 
+          - name: DB_HOSTNAME
+            value: "mysql"
+          - name: DB_PORT
+            value: "3306"
+          - name: DB_NAME  
+            value: "webappdb"
+          - name: DB_USERNAME
+            value: "root"
+          - name: DB_PASSWORD
+            value: "dbpassword11"
+
+
