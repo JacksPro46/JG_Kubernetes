@@ -1,0 +1,38 @@
+## Liveness:
+## The Liveness Probe is used to determine if a container is still running.
+## If a container's Liveness Probe fails, Kubernetes will try to restart the container.
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myapp-pod
+spec:
+  containers:
+    - name: myapp-container
+      image: myapp-image
+      resources:
+        limits:
+          memory: "128Mi"
+          cpu: "500m"
+      ports:
+        - containerPort: 80
+      livenessProbe:
+        httpGet:
+          path: /health
+          port: 80
+        initialDelaySeconds: 30 # Wait for 30 seconds before checking
+        periodSeconds: 10 # Check every 10 seconds
+
+# Example Use Cases:
+
+#     Database Initialization:
+#         Readiness: Wait until the database service is fully initialized and ready to accept connections before sending traffic.
+#         Liveness: Regularly check if the database service is still running; restart it if it's not.
+
+#     Background Job Processing:
+#         Readiness: Wait until the background worker has loaded the necessary configurations and resources.
+#         Liveness: Ensure the background worker is still actively processing jobs; restart it if it becomes unresponsive.
+
+#     Web Servers:
+#         Readiness: Wait until the web server has fully initialized and loaded required resources.
+#         Liveness: Regularly check if the web server is still responding to requests; restart it if it's not.

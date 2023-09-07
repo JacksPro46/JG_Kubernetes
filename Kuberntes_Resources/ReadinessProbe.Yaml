@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myapp-pod
+spec:
+  containers:
+  - name: myapp-container
+    image: myapp-image
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+    ports:
+    - containerPort: 80
+    readinessProbe:
+      httpGet:
+        path: /health
+        port: 80
+      initialDelaySeconds: 15   # Wait for 15 seconds before checking
+      periodSeconds: 5         # Check every 5 seconds
+
+##  Imagine a web server application. When it starts, 
+##  it might need a few seconds to initialize and load necessary resources. 
+##  Until it's fully ready, sending traffic to it could result in errors.
+
+##  In this example, the Readiness Probe checks the /health endpoint every 5 seconds, starting 15 seconds after the container starts. 
+##  If the probe fails, Kubernetes considers the container not ready.
+
+# Example Use Cases:
+
+#     Database Initialization:
+#         Readiness: Wait until the database service is fully initialized and ready to accept connections before sending traffic.
+#         Liveness: Regularly check if the database service is still running; restart it if it's not.
+
+#     Background Job Processing:
+#         Readiness: Wait until the background worker has loaded the necessary configurations and resources.
+#         Liveness: Ensure the background worker is still actively processing jobs; restart it if it becomes unresponsive.
+
+#     Web Servers:
+#         Readiness: Wait until the web server has fully initialized and loaded required resources.
+#         Liveness: Regularly check if the web server is still responding to requests; restart it if it's not.
