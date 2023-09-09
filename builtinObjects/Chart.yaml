@@ -1,5 +1,5 @@
 apiVersion: v2
-name: MyjgChart
+name: builtinObjects
 description: A Helm chart for Kubernetes
 
 # A chart can be either an 'application' or a 'library' chart.
@@ -11,14 +11,6 @@ description: A Helm chart for Kubernetes
 # a dependency of application charts to inject those utilities and functions into the rendering
 # pipeline. Library charts do not define any templates and therefore cannot be deployed.
 type: application
-
-# dependencies:
-#   - name: apache
-#     version: 1.2.3
-#     repository: https://example.com/charts
-#   - name: mysql
-#     version: 3.2.1
-#     repository: https://another.example.com/charts
 
 # This is the chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.

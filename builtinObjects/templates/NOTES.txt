@@ -1,0 +1,3 @@
+{{/* Root or dot period object */}}
+Root Object: {{ . }}
+Release Name: {{ .Release.Name }}
